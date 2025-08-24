@@ -18,9 +18,14 @@ const noteSchema = new mongoose.Schema(
       type: String,
       default: "#ffffff",
     },
-    favorite: {
+    important: {
       type: Boolean,
       default: false,
+    },
+    category: {
+      type: String,
+      enum: ["Personal", "Work", "Assignment", "Other"],
+      default: "Other",
     },
   },
   {

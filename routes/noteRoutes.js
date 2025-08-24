@@ -1,29 +1,29 @@
-import Router from "express"
-import Note from "../models/Note.js"
+import Router from "express";
+import Note from "../models/Note.js";
 
-const router = Router()
+const router = Router();
 
 // Create a new note
 router.post("/notes", async (req, res) => {
-    try {
-        const { title, content } = req.body
-        const newNote = new Note({ title, content })
-        await newNote.save()
-        res.status(201).json({ message: "Note created", note: newNote })
-    } catch (error) {
-        res.status(500).json({ message: "Server Error", error })
-    }
-})
+  try {
+    const { title, content } = req.body;
+    const newNote = new Note({ title, content });
+    await newNote.save();
+    res.status(201).json({ message: "Note created", note: newNote });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
 
 // Get all notes
 router.get("/notes", async (req, res) => {
-    try {
-        const notes = await Note.find()
-        res.status(200).json(notes)
-    } catch (error) {
-        res.status(500).json({ message: "Server Error", error })
-    }
-})
+  try {
+    const notes = await Note.find();
+    res.status(200).json(notes);
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
 
 // Update a note
 router.put("/notes/:id", async (req, res) => {
@@ -39,12 +39,24 @@ router.put("/notes/:id", async (req, res) => {
 
 // Delete a note
 router.delete("/notes/:id", async (req, res) => {
-    try {
-        const { id } = req.params
-        await Note.findByIdAndDelete(id)
-        res.status(200).json({ message: "Note deleted" })
-    } catch (error) {
-        res.status(500).json({ message: "Server Error", error })
-    }
-})
-export default router
+  try {
+    const { id } = req.params;
+    await Note.findByIdAndDelete(id);
+    res.status(200).json({ message: "Note deleted" });
+  } catch (error) {
+    res.status(500).json({ message: "Server Error", error });
+  }
+});
+
+// GET notes by category
+router.get("/notes/category/:type", async (req, res) => {   // e.g., /notes/category/Work
+  try {
+    const type = req.params.type;
+    const notes = await Note.find({ category: type });
+    res.json(notes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+export default router;

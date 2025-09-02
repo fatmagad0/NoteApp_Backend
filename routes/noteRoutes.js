@@ -6,8 +6,8 @@ const router = Router();
 // Create a new note
 router.post("/notes", async (req, res) => {
   try {
-    const { title, content } = req.body;
-    const newNote = new Note({ title, content });
+    const { title, content, category, bgcolor,tagcolor,isImportant } = req.body;
+    const newNote = new Note({ title, content, category, bgcolor,tagcolor,isImportant });
     await newNote.save();
     res.status(201).json({ message: "Note created", note: newNote });
   } catch (error) {

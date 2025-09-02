@@ -11,20 +11,26 @@ const noteSchema = new mongoose.Schema(
     },
     content: {
       type: String,
+      required: true,
       trim: true,
+      minlength: 1,
       maxlength: 500,
     },
-    color: {
+    bgcolor: {
       type: String,
       default: "#ffffff",
     },
-    important: {
+    tagcolor: {
+      type: String,
+      default: "#000000",
+    },
+    isImportant: {
       type: Boolean,
       default: false,
     },
     category: {
       type: String,
-      enum: ["Personal", "Work", "Assignment", "Other"],
+      enum: ["Personal", "Work", "Assignment", "Shopping", "Other"],
       default: "Other",
     },
   },
